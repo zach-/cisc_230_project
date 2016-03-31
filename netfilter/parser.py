@@ -7,6 +7,13 @@ except ImportError:
 
 import netfilter.rule
 
+"""
+        parser.py                           Author: Zach Bricker
+
+        (Description)
+
+"""
+
 # define useful regexps
 re_chain = re.compile(r'^:*([^\s]+) ([^\s]+) \[([0-9]+):([0-9]+)\]$')
 re_rule = re.compile(r'^\[([0-9]+):([0-9]+)\] -A ([^\s]+) (.*)$')
@@ -16,6 +23,12 @@ re_main_opt = re.compile(r'^-([^-])$')
 
 class ODict(UserDict):
     def __init__(self, dict=None):
+        """
+        Constructor
+
+        :param dict
+        :return None
+        """
         self._keys = []
         UserDict.__init__(self, dict)
 
@@ -32,6 +45,15 @@ class ParseError(Exception):
 
 
 def split_words(line):
+    """
+    Takes in a line and then returns a split form of it
+
+    :param line
+    :return x
+    :return unquote
+    :return line
+    """
+
     def unquote(x):
         if x and x[0] == '"':
             return x[1:-1]
@@ -47,6 +69,13 @@ def split_words(line):
 
 
 def pull_extension_opts(bits, pos):
+    """
+    Returns a modify bits
+
+    :param bits
+    :param pos
+    :return opt_bits, pos
+    """
     opt_bits = []
     while pos < len(bits) and not re_main_opt.match(bits[pos]):
         opt_bits.append(bits[pos])
@@ -55,6 +84,13 @@ def pull_extension_opts(bits, pos):
 
 
 def pull_main_opt(bits, pos):
+    """
+    Returns the main part of bits specified by the pos
+
+    :param bits
+    :param pos
+    :return val, pos
+    """
     val = bits[pos]
     pos += 1
     if val == '!':
@@ -64,6 +100,12 @@ def pull_main_opt(bits, pos):
 
 
 def parse_rule(spec):
+    """
+    Parse a rule together
+
+    :param spec
+    :return rule
+    """
     rule = netfilter.rule.Rule()
     bits = split_words(spec)
     pos = 0
@@ -103,6 +145,12 @@ def parse_rule(spec):
 
 
 def parse_chains(data):
+    """
+    Parse together a chain
+
+    :param data
+    :return chain
+    """
     chains = ODict()
     for line in data.splitlines(True):
         m = re_chain.match(line)
@@ -119,6 +167,13 @@ def parse_chains(data):
 
 
 def parse_rules(data, chain):
+    """
+    Parse together a set of rules with a chian
+
+    :param data
+    :param chain
+    :return rules
+    """
     rules = []
     for line in data.splitlines(True):
         m = re_rule.match(line)

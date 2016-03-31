@@ -1,8 +1,19 @@
 from firewall import Firewall
 import sys
 
+"""
+        gui.py                              Author: Rowland DePree
 
+
+        A command console UI(user interface) design to interact with the firewall file to make it more user friendly.
+
+"""
 def main():
+    """
+    Main method.
+
+    :return None
+    """
     firewall = Firewall()
     print("Welcome to the Firewall Shell Program!")
     print("WARNING: This program deals with IP Tables and WILL overwrite existing iptable rules.")
@@ -99,6 +110,8 @@ def main():
             else:
                 pass
 
-
+"""
+    Starts the main method
+"""
 if __name__ == "__main__":
     main()

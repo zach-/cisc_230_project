@@ -3,11 +3,27 @@ import re
 
 import netfilter.parser
 
+"""
+            rule.py                                             Author: Zack Bricker
+
+
+            A set of classes to allow the creation of rules to be used with IPTables
+
+"""
+
 re_extension_opt = re.compile(r'^--(.*)$')
 
 
 class Extension:
     def __init__(self, name, options, rewrite_options={}):
+        """
+        Constructor
+
+        :param name
+        :param options
+        :param rewrite_options
+        :return
+        """
         self.__name = name
         self.__options = {}
         self.__rewrite_options = rewrite_options
@@ -15,6 +31,13 @@ class Extension:
             self.__parse_options(options)
 
     def __eq__(self, other):
+        """
+        Rewrites built-in comparison function
+
+        :param other
+        :return self.__name == other.__name and \ self.__options == other.__options
+        :return NotImplemented
+        """
         if isinstance(other, Extension):
             return self.__name == other.__name and \
                    self.__options == other.__options
@@ -22,12 +45,25 @@ class Extension:
             return NotImplemented
 
     def __ne__(self, other):
+        """
+        Rewrites built-in comparison function
+
+        :param other
+        :return result
+        :return not result
+        """
         result = self.__eq__(other)
         if result is NotImplemented:
             return result
         return not result
 
     def __parse_options(self, options):
+        """
+        Parses options
+
+        :param options
+        :return
+        """
         if isinstance(options, list):
             bits = options
         else:
@@ -66,16 +102,38 @@ class Extension:
             cur_opt = []
 
     def log(self, level, prefix=''):
+        """
+        Will log level and prefix with self.__name and self.__options
+
+        :param level
+        :param prefix
+        :return
+        """
         logging.log(level, "%sname: %s", prefix, self.__name)
         logging.log(level, "%soptions: %s", prefix, self.__options)
 
     def name(self):
+        """
+        Returns name
+
+        :return self.__name
+        """
         return self.__name
 
     def options(self):
+        """
+        Returns options
+
+        :return self.__options
+        """
         return self.__options
 
     def specbits(self):
+        """
+        Returns bits
+
+        :return bits
+        """
         bits = []
         for opt in sorted(self.__options):
             # handle the case where this is a negated option
@@ -95,6 +153,13 @@ class Extension:
 
 class Match(Extension):
     def __init__(self, name, options=None):
+        """
+        Constructor
+
+        :param name
+        :param options
+        :return
+        """
         Extension.__init__(self, name, options, {
             'destination-port': 'dport',
             'destination-ports': 'dports',
@@ -104,11 +169,24 @@ class Match(Extension):
 
 class Target(Extension):
     def __init__(self, name, options=None):
+        """
+        Constructor
+
+        :param name
+        :param options
+        :return
+        """
         Extension.__init__(self, name, options)
 
 
 class Rule:
     def __init__(self, **kwargs):
+        """
+        Constructor
+
+        :param **kwargs
+        :return
+        """
         # initialise rule definition
         self.protocol = None
         self.destination = None
@@ -126,6 +204,20 @@ class Rule:
             self.__setattr__(k, v)
 
     def __eq__(self, other):
+        """
+        Rewrites built-in comparison function
+
+        :param other
+        :return other.protocol == self.protocol and \
+                   other.in_interface == self.in_interface and \
+                   other.out_interface == self.out_interface and \
+                   other.source == self.source and \
+                   other.destination == self.destination and \
+                   other.goto == self.goto and \
+                   other.jump == self.jump and \
+                   other.matches == self.matches
+        :return NotImplemented
+        """
         if isinstance(other, Rule):
             return other.protocol == self.protocol and \
                    other.in_interface == self.in_interface and \
@@ -139,12 +231,26 @@ class Rule:
             return NotImplemented
 
     def __ne__(self, other):
+        """
+        Rewrites built-in comparison function
+
+        :param other
+        :return result
+        :return not result
+        """
         result = self.__eq__(other)
         if result is NotImplemented:
             return result
         return not result
 
     def __setattr__(self, name, value):
+        """
+        Rewrites built-in attribute assignment function
+
+        :param name
+        :param value
+        :return
+        """
         if name == 'source' or name == 'destination':
             # produce "canonical" form of a source / destination
             # FIXME: we need to handle arbitrary netmasks here
@@ -159,12 +265,26 @@ class Rule:
         self.__dict__[name] = value
 
     def find(self, rules):
+        """
+        Returns a specific rule if it exists
+
+        :param rules
+        :return rule
+        :return None
+        """
         for rule in rules:
             if self == rule:
                 return rule
         return None
 
     def log(self, level, prefix=''):
+        """
+        Logs the rule
+
+        :param level
+        :param prefix
+        :return
+        """
         logging.log(level, "%sin interface: %s", prefix, self.in_interface)
         logging.log(level, "%sout interface: %s", prefix, self.out_interface)
         logging.log(level, "%ssource: %s", prefix, self.source)
@@ -177,7 +297,20 @@ class Rule:
             self.jump.log(level, prefix + '  ')
 
     def specbits(self):
+        """
+        Returns bits
+
+        :return bits
+        """
         def host_bits(opt, optval):
+            """
+            Returns an array of objects
+
+            :param opt
+            :param optval
+            :return ['!', opt, m.group(1)]
+            :return [opt, optval]
+            """
             # handle the case where this is a negated value
             m = re.match(r'^!\s*(.*)', optval)
             if m:
