@@ -33,304 +33,442 @@ COMMIT
 
 class ParserTestCase(unittest.TestCase):
     def testSplitWords(self):
-        self.assertEqual(netfilter.parser.split_words('a b c'),
-            ['a', 'b', 'c'])
-        self.assertEqual(netfilter.parser.split_words('a\tb  c'),
-            ['a', 'b', 'c'])
+        print('Parser Test Case Set:\nRunning Test Split Words...')
+        print('\t' + str(self.assertEqual(netfilter.parser.split_words('a b c'),
+            ['a', 'b', 'c'])))
+        print('\t' + str(self.assertEqual(netfilter.parser.split_words('a\tb  c'),
+            ['a', 'b', 'c'])))
+        print('...Done')
 
     def testSplitWordsQuoted(self):
+        print('Running Test Split Words Quoted...')
         line = 'a "some text" b'
-        self.assertEqual(netfilter.parser.split_words(line),
-            ['a', 'some text', 'b'])
+        print('\tLine: ' + line)
+        print('\t' + str(self.assertEqual(netfilter.parser.split_words(line),
+            ['a', 'some text', 'b'])))
+        print('...Done')
 
     def testParseChains(self):
+        print('Test Parse Chains...')
         chains = netfilter.parser.parse_chains(iptables_data)
 
-        self.assertEquals(chains.keys(), ['INPUT', 'FORWARD', 'OUTPUT', 'firewall_forward_filter', 'firewall_input_filter'])
+        print('\tChains: ' + str(chains))
 
-        self.assertEquals(chains['INPUT']['policy'], 'DROP')
-        self.assertEquals(chains['INPUT']['bytes'], 75796)
-        self.assertEquals(chains['INPUT']['packets'], 556)
+        print('\t' + str(self.assertEquals(chains.keys(), ['INPUT', 'FORWARD', 'OUTPUT', 'firewall_forward_filter', 'firewall_input_filter'])))
 
-        self.assertEquals(chains['FORWARD']['policy'], 'DROP')
-        self.assertEquals(chains['FORWARD']['bytes'], 11510)
-        self.assertEquals(chains['FORWARD']['packets'], 204)
+        print('\t' + str(self.assertEquals(chains['INPUT']['policy'], 'DROP')))
+        print('\t' + str(self.assertEquals(chains['INPUT']['bytes'], 75796)))
+        print('\t' + str(self.assertEquals(chains['INPUT']['packets'], 556)))
 
-        self.assertEquals(chains['OUTPUT']['policy'], 'ACCEPT')
-        self.assertEquals(chains['OUTPUT']['bytes'], 214582)
-        self.assertEquals(chains['OUTPUT']['packets'], 1884)
+        print('\t' + str(self.assertEquals(chains['FORWARD']['policy'], 'DROP')))
+        print('\t' + str(self.assertEquals(chains['FORWARD']['bytes'], 11510)))
+        print('\t' + str(self.assertEquals(chains['FORWARD']['packets'], 204)))
+
+        print('\t' + str(self.assertEquals(chains['OUTPUT']['policy'], 'ACCEPT')))
+        print('\t' + str(self.assertEquals(chains['OUTPUT']['bytes'], 214582)))
+        print('\t' + str(self.assertEquals(chains['OUTPUT']['packets'], 1884)))
+
+        print('...Done')
 
     def testParseRules(self):
+        print('Running Test Parse Rules...')
         rules = netfilter.parser.parse_rules(iptables_data, 'INPUT')
-        self.assertEquals(len(rules), 1)
-        self.assertEquals(rules[0].jump.name(), 'firewall_input_filter')
+        print('\tRules: ' + str(rules))
+        print('\t' + str(self.assertEquals(len(rules), 1)))
+        print('\t' + str(self.assertEquals(rules[0].jump.name(), 'firewall_input_filter')))
 
         rules = netfilter.parser.parse_rules(iptables_data, 'FORWARD')
-        self.assertEquals(len(rules), 1)
-        self.assertEquals(rules[0].jump.name(), 'firewall_forward_filter')
+        print('\tRules: ' + str(rules))
+        print('\t' + str(self.assertEquals(len(rules), 1)))
+        print('\t' + str(self.assertEquals(rules[0].jump.name(), 'firewall_forward_filter')))
 
         rules = netfilter.parser.parse_rules(iptables_data, 'OUTPUT')
-        self.assertEquals(rules, [])
+        print('\tRules: ' + str(rules))
+        print('\t' + str(self.assertEquals(rules, [])))
+        print('...Done')
 
 class TargetTestCase(unittest.TestCase):
     def testInit(self):
+        print('Target Test Case Set:\nRunning Test Initial...')
         target = Target('ACCEPT')
-        self.assertEqual(target.name(), 'ACCEPT')
-        self.assertEqual(target.options(), {})
+        print('\tTarget: ' + str(target))
+        print('\t' + str(self.assertEqual(target.name(), 'ACCEPT')))
+        print('\t' + str(self.assertEqual(target.options(), {})))
+        print('...Done')
 
     def testInitOptions(self):
+        print('Running Test Initial Options...')
         target = Target('REDIRECT', '--wiz bang --foo bar')
-        self.assertEqual(target.name(), 'REDIRECT')
-        self.assertEqual(target.options(), {'foo': ['bar'], 'wiz': ['bang']})
+        print('\tTarget: ' + str(target))
+        print('\t' + str(self.assertEqual(target.name(), 'REDIRECT')))
+        print('\t' + str(self.assertEqual(target.options(), {'foo': ['bar'], 'wiz': ['bang']})))
+        print('...Done')
 
     def testEqual(self):
+        print('Running Test Equal....')
         target1 = Target('ACCEPT', '--foo bar')
         target2 = Target('ACCEPT', '--foo bar')
-        self.assertEqual(target1 == target2, True)
-        self.assertEqual(target1 != target2, False)
+        print('\tTarget 1: ' + str(target1))
+        print('\tTarget 2: ' + str(target2))
+        print('\t' + str(self.assertEqual(target1 == target2, True)))
+        print('\t' + str(self.assertEqual(target1 != target2, False)))
+        print('...Done')
     
     def testEqualOutOfOrder(self):
+        print('Running Test Equal Out of Order...')
         target1 = Target('ACCEPT', '--foo bar --wiz bang')
         target2 = Target('ACCEPT', '--wiz bang --foo bar')
-        self.assertEqual(target1 == target2, True)
-        self.assertEqual(target1 != target2, False)
+        print('\tTarget 1: ' + str(target1))
+        print('\tTarget 2: ' + str(target2))
+        print('\t' + str(self.assertEqual(target1 == target2, True)))
+        print('\t' + str(self.assertEqual(target1 != target2, False)))
+        print('...Done')
 
     def testNotEqualName(self):
+        print('Running Test Not Equal Name...')
         target1 = Target('ACCEPT', '--foo bar')
         target2 = Target('ACCEPT2', '--foo bar')
-        self.assertEqual(target1 == target2, False)
-        self.assertEqual(target1 != target2, True)
+        print('\tTarget 1: ' + str(target1))
+        print('\tTarget 2: ' + str(target2))
+        print('\t' + str(self.assertEqual(target1 == target2, False)))
+        print('\t' + str(self.assertEqual(target1 != target2, True)))
+        print('...Done')
 
     def testNotEqualOptions(self):
+        print('Running Test Not Equal Options...')
         target1 = Target('ACCEPT')
         target2 = Target('ACCEPT', '--foo bar')
-        self.assertEqual(target1 == target2, False)
-        self.assertEqual(target1 != target2, True)
+        print('\tTarget 1: ' + str(target1))
+        print('\tTarget 2: ' + str(target2))
+        print('\t' + str(self.assertEqual(target1 == target2, False)))
+        print('\t' + str(self.assertEqual(target1 != target2, True)))
+        print('...Done')
 
 class MatchTestCase(unittest.TestCase):
     def testRewriteSourcePort(self):
+        print('Match Test Case Set:\nRunning Test Rewrite Source Port...')
         match = Match('tcp', '--source-port 1234')
-        self.assertEqual(match.options(), {'sport': ['1234']})
+        print('\tMatch: ' + str(match))
+        print('\t' + str(self.assertEqual(match.options(), {'sport': ['1234']})))
+        print('...Done')
     
     def testRewriteSourcePorts(self):
+        print('Running Test Rewrite Source Ports...')
         match = Match('multiport', '--source-ports 1,2,3')
-        self.assertEqual(match.options(), {'sports': ['1,2,3']})
+        print('\tMatch: ' + str(match))
+        print('\t' + str(self.assertEqual(match.options(), {'sports': ['1,2,3']})))
+        print('...Done')
     
-    def testRewriteDestPorts(self):
+    def testRewriteDestPort(self):
+        print('Running Test Rewrite Dest Port...')
         match = Match('tcp', '--destination-port 1234')
-        self.assertEqual(match.options(), {'dport': ['1234']})
+        print('\tMatch: ' + str(match))
+        print('\t' + str(self.assertEqual(match.options(), {'dport': ['1234']})))
+        print('...Done')
     
     def testRewriteDestPorts(self):
+        print('Runnning Test Rewrite Dest Ports...')
         match = Match('multiport', '--destination-ports 1,2,3')
-        self.assertEqual(match.options(), {'dports': ['1,2,3']})
+        print('\tMatch: ' + str(match))
+        print('\t' + str(self.assertEqual(match.options(), {'dports': ['1,2,3']})))
+        print('...Done')
 
 class RuleTestCase(unittest.TestCase):
     def testInit(self):
+        print('Rule Test Case Set:\nRunning Test Inital...')
         rule = Rule(jump=Target('ACCEPT'))
-        self.assertEqual(rule.protocol, None)
-        self.assertEqual(rule.in_interface, None)
-        self.assertEqual(rule.out_interface, None)
-        self.assertEqual(rule.source, None)
-        self.assertEqual(rule.destination, None)
-        self.assertEqual(rule.jump.name(), 'ACCEPT')
-        self.assertEqual(rule.jump.options(), {})
-        self.assertEqual(rule.specbits(), ['-j', 'ACCEPT'])
+        print('\tRule: ' + str(rule))
+        print('\t' + str(self.assertEqual(rule.protocol, None)))
+        print('\t' + str(self.assertEqual(rule.in_interface, None)))
+        print('\t' + str(self.assertEqual(rule.out_interface, None)))
+        print('\t' + str(self.assertEqual(rule.source, None)))
+        print('\t' + str(self.assertEqual(rule.destination, None)))
+        print('\t' + str(self.assertEqual(rule.jump.name(), 'ACCEPT')))
+        print('\t' + str(self.assertEqual(rule.jump.options(), {})))
+        print('\t' + str(self.assertEqual(rule.specbits(), ['-j', 'ACCEPT'])))
+        print('...Done')
 
     def testSource(self):
+        print('Running Test Source...')
         rule = Rule(source='192.168.1.2', jump='ACCEPT')
-        self.assertEqual(rule.protocol, None)
-        self.assertEqual(rule.in_interface, None)
-        self.assertEqual(rule.out_interface, None)
-        self.assertEqual(rule.source, '192.168.1.2')
-        self.assertEqual(rule.destination, None)
-        self.assertEqual(rule.jump.name(), 'ACCEPT')
-        self.assertEqual(rule.jump.options(), {})
-        self.assertEqual(rule.specbits(), ['-s', '192.168.1.2', '-j', 'ACCEPT'])
+        print('\tRule: ' + str(rule))
+        print('\t' + str(self.assertEqual(rule.protocol, None)))
+        print('\t' + str(self.assertEqual(rule.in_interface, None)))
+        print('\t' + str(self.assertEqual(rule.out_interface, None)))
+        print('\t' + str(self.assertEqual(rule.source, '192.168.1.2')))
+        print('\t' + str(self.assertEqual(rule.destination, None)))
+        print('\t' + str(self.assertEqual(rule.jump.name(), 'ACCEPT')))
+        print('\t' + str(self.assertEqual(rule.jump.options(), {})))
+        print('\t' + str(self.assertEqual(rule.specbits(), ['-s', '192.168.1.2', '-j', 'ACCEPT'])))
+        print('...Done')
 
     def testSourceNegated(self):
+        print('Running Test Source Negated...')
         rule = Rule(source='! 192.168.1.2', jump='ACCEPT')
-        self.assertEqual(rule.protocol, None)
-        self.assertEqual(rule.in_interface, None)
-        self.assertEqual(rule.out_interface, None)
-        self.assertEqual(rule.source, '! 192.168.1.2')
-        self.assertEqual(rule.destination, None)
-        self.assertEqual(rule.jump.name(), 'ACCEPT')
-        self.assertEqual(rule.jump.options(), {})
-        self.assertEqual(rule.specbits(), ['!', '-s', '192.168.1.2', '-j', 'ACCEPT'])
+        print('\tRule: ' + str(rule))
+        print('\t' + str(self.assertEqual(rule.protocol, None)))
+        print('\t' + str(self.assertEqual(rule.in_interface, None)))
+        print('\t' + str(self.assertEqual(rule.out_interface, None)))
+        print('\t' + str(self.assertEqual(rule.source, '! 192.168.1.2')))
+        print('\t' + str(self.assertEqual(rule.destination, None)))
+        print('\t' + str(self.assertEqual(rule.jump.name(), 'ACCEPT')))
+        print('\t' + str(self.assertEqual(rule.jump.options(), {})))
+        print('\t' + str(self.assertEqual(rule.specbits(), ['!', '-s', '192.168.1.2', '-j', 'ACCEPT'])))
+        print('...Done')
 
     def testDestination(self):
+        print('Running Test Destination...')
         rule = Rule(destination='192.168.1.3', jump='REJECT')
-        self.assertEqual(rule.protocol, None)
-        self.assertEqual(rule.in_interface, None)
-        self.assertEqual(rule.out_interface, None)
-        self.assertEqual(rule.source, None)
-        self.assertEqual(rule.destination, '192.168.1.3')
-        self.assertEqual(rule.jump.name(), 'REJECT')
-        self.assertEqual(rule.jump.options(), {})
-        self.assertEqual(rule.specbits(), ['-d', '192.168.1.3', '-j', 'REJECT'])
+        print('\tRule: ' + str(rule))
+        print('\t' + str(self.assertEqual(rule.protocol, None)))
+        print('\t' + str(self.assertEqual(rule.in_interface, None)))
+        print('\t' + str(self.assertEqual(rule.out_interface, None)))
+        print('\t' + str(self.assertEqual(rule.source, None)))
+        print('\t' + str(self.assertEqual(rule.destination, '192.168.1.3')))
+        print('\t' + str(self.assertEqual(rule.jump.name(), 'REJECT')))
+        print('\t' + str(self.assertEqual(rule.jump.options(), {})))
+        print('\t' + str(self.assertEqual(rule.specbits(), ['-d', '192.168.1.3', '-j', 'REJECT'])))
+        print('...Done')
 
     def testDestinationNegated(self):
+        print('Running Test Destination Negated...')
         rule = Rule(destination='! 192.168.1.3', jump='REJECT')
-        self.assertEqual(rule.protocol, None)
-        self.assertEqual(rule.in_interface, None)
-        self.assertEqual(rule.out_interface, None)
-        self.assertEqual(rule.source, None)
-        self.assertEqual(rule.destination, '! 192.168.1.3')
-        self.assertEqual(rule.jump.name(), 'REJECT')
-        self.assertEqual(rule.jump.options(), {})
-        self.assertEqual(rule.specbits(), ['!', '-d', '192.168.1.3', '-j', 'REJECT'])
+        print('\tRule: ' + str(rule))
+        print('\t' + str(self.assertEqual(rule.protocol, None)))
+        print('\t' + str(self.assertEqual(rule.in_interface, None)))
+        print('\t' + str(self.assertEqual(rule.out_interface, None)))
+        print('\t' + str(self.assertEqual(rule.source, None)))
+        print('\t' + str(self.assertEqual(rule.destination, '! 192.168.1.3')))
+        print('\t' + str(self.assertEqual(rule.jump.name(), 'REJECT')))
+        print('\t' + str(self.assertEqual(rule.jump.options(), {})))
+        print('\t' + str(self.assertEqual(rule.specbits(), ['!', '-d', '192.168.1.3', '-j', 'REJECT'])))
+        print('...Done')
 
     def testSourceDestinationProtocol(self):
+        print('Running Test Source Destination Protocol...')
         rule = Rule(source='192.168.1.2', destination='192.168.1.3',
             protocol='tcp', jump='DROP')
-        self.assertEqual(rule.protocol, 'tcp')
-        self.assertEqual(rule.in_interface, None)
-        self.assertEqual(rule.out_interface, None)
-        self.assertEqual(rule.source, '192.168.1.2')
-        self.assertEqual(rule.destination, '192.168.1.3')
-        self.assertEqual(rule.jump.name(), 'DROP')
-        self.assertEqual(rule.jump.options(), {})
-        self.assertEqual(rule.specbits(), ['-p', 'tcp', '-s', '192.168.1.2', '-d', '192.168.1.3', '-j', 'DROP'])
+        print('\tRule: ' + str(rule))
+        print('\t' + str(self.assertEqual(rule.protocol, 'tcp')))
+        print('\t' + str(self.assertEqual(rule.in_interface, None)))
+        print('\t' + str(self.assertEqual(rule.out_interface, None)))
+        print('\t' + str(self.assertEqual(rule.source, '192.168.1.2')))
+        print('\t' + str(self.assertEqual(rule.destination, '192.168.1.3')))
+        print('\t' + str(self.assertEqual(rule.jump.name(), 'DROP')))
+        print('\t' + str(self.assertEqual(rule.jump.options(), {})))
+        print('\t' + str(self.assertEqual(rule.specbits(), ['-p', 'tcp', '-s', '192.168.1.2', '-d', '192.168.1.3', '-j', 'DROP'])))
+        print('...Done')
 
     def testInterfaces(self):
+        print('Running Test Interfaces...')
         rule = Rule(in_interface='eth1', out_interface='eth2',
             jump='REJECT')
-        self.assertEqual(rule.protocol, None)
-        self.assertEqual(rule.in_interface, 'eth1')
-        self.assertEqual(rule.out_interface, 'eth2')
-        self.assertEqual(rule.source, None)
-        self.assertEqual(rule.destination, None)
-        self.assertEqual(rule.specbits(), ['-i', 'eth1', '-o', 'eth2', '-j', 'REJECT'])
+        print('\tRule: ' + str(rule))
+        print('\t' + str(self.assertEqual(rule.protocol, None)))
+        print('\t' + str(self.assertEqual(rule.in_interface, 'eth1')))
+        print('\t' + str(self.assertEqual(rule.out_interface, 'eth2')))
+        print('\t' + str(self.assertEqual(rule.source, None)))
+        print('\t' + str(self.assertEqual(rule.destination, None)))
+        print('\t' + str(self.assertEqual(rule.specbits(), ['-i', 'eth1', '-o', 'eth2', '-j', 'REJECT'])))
+        print('...Done')
 
     def testInterfacesNegated(self):
+        print('Running Test Interfaces Negated...')
         rule = Rule(in_interface='!eth1', out_interface='!eth2',
             jump='REJECT')
-        self.assertEqual(rule.protocol, None)
-        self.assertEqual(rule.in_interface, '!eth1')
-        self.assertEqual(rule.out_interface, '!eth2')
-        self.assertEqual(rule.source, None)
-        self.assertEqual(rule.destination, None)
-        self.assertEqual(rule.specbits(), ['!', '-i', 'eth1', '!', '-o', 'eth2', '-j', 'REJECT'])
+        print('\tRule: ' + str(rule))
+        print('\t' + str(self.assertEqual(rule.protocol, None)))
+        print('\t' + str(self.assertEqual(rule.in_interface, '!eth1')))
+        print('\t' + str(self.assertEqual(rule.out_interface, '!eth2')))
+        print('\t' + str(self.assertEqual(rule.source, None)))
+        print('\t' + str(self.assertEqual(rule.destination, None)))
+        print('\t' + str(self.assertEqual(rule.specbits(), ['!', '-i', 'eth1', '!', '-o', 'eth2', '-j', 'REJECT'])))
+        print('...Done')
 
     def testTargetLog(self):
+        print('Running Test Target Log...')
         rule = Rule(jump=Target('LOG', '--log-prefix "ICMP accepted : " --log-level 4'))
-        self.assertEqual(rule.specbits(), ['-j', 'LOG', '--log-level', '4', '--log-prefix', 'ICMP accepted : '])
+        print('\tRule: ' + str(rule))
+        print('\t' + str(self.assertEqual(rule.specbits(), ['-j', 'LOG', '--log-level', '4', '--log-prefix', 'ICMP accepted : '])))
+        print('...Done')
 
     def testMatchMark(self):
+        print('Running Test Match Mark...')
         rule = Rule(jump='ACCEPT')
         rule.matches.append(Match('mark', '--mark 0x64'))
-        self.assertEqual(rule.specbits(), ['-m', 'mark', '--mark', '0x64', '-j', 'ACCEPT'])
+        print('\tRule: ' + str(rule))
+        print('\t' + str(self.assertEqual(rule.specbits(), ['-m', 'mark', '--mark', '0x64', '-j', 'ACCEPT'])))
+        print('...Done')
 
     def testMatchMultiportDports(self):
+        print('Running Test Match Mulitport Dports...')
         rule = Rule(jump='ACCEPT')
         rule.matches.append(Match('multiport', '--dports 20,21,22,80,25,1720'))
-        self.assertEqual(rule.specbits(), ['-m', 'multiport', '--dports', '20,21,22,80,25,1720', '-j', 'ACCEPT'])
+        print('\tRule: ' + str(rule))
+        print('\t' + str(self.assertEqual(rule.specbits(), ['-m', 'multiport', '--dports', '20,21,22,80,25,1720', '-j', 'ACCEPT'])))
+        print('...Done')
 
     def testMatchState(self):
+        print('Running Test Match State...')
         rule = Rule(jump='ACCEPT')
         rule.matches.append(Match('state', '--state ESTABLISHED,RELATED'))
-        self.assertEqual(rule.specbits(), ['-m', 'state', '--state', 'ESTABLISHED,RELATED', '-j', 'ACCEPT'])
+        print('\tRule: ' + str(rule))
+        print('\t' + str(self.assertEqual(rule.specbits(), ['-m', 'state', '--state', 'ESTABLISHED,RELATED', '-j', 'ACCEPT'])))
+        print('...Done')
 
     def testMatchTcpFlags(self):
+        print('Running Test Match TCP Flags...')
         rule = Rule(protocol='tcp', jump='ACCEPT')
         rule.matches.append(Match('tcp', '--tcp-flags ACK,SYN ACK'))
-        self.assertEqual(rule.specbits(), ['-p', 'tcp', '-m', 'tcp', '--tcp-flags', 'ACK,SYN', 'ACK', '-j', 'ACCEPT'])
+        print('\tRule: ' + str(rule))
+        print('\t' + str(self.assertEqual(rule.specbits(), ['-p', 'tcp', '-m', 'tcp', '--tcp-flags', 'ACK,SYN', 'ACK', '-j', 'ACCEPT'])))
+        print('...Done')
 
     def testMatchTcpNotFlags(self):
+        print('Running Test Match TCP Not Flags...')
         rule = Rule(protocol='tcp', jump='ACCEPT')
         rule.matches.append(Match('tcp', '--tcp-flags ! ACK,SYN ACK'))
-        self.assertEqual(rule.specbits(), ['-p', 'tcp', '-m', 'tcp', '--tcp-flags', '!', 'ACK,SYN', 'ACK', '-j', 'ACCEPT'])
+        print('\tRule: ' + str(rule))
+        print('\t' + str(self.assertEqual(rule.specbits(), ['-p', 'tcp', '-m', 'tcp', '--tcp-flags', '!', 'ACK,SYN', 'ACK', '-j', 'ACCEPT'])))
+        print('...Done')
 
     def testMatchTcpDport(self):
+        print('Running Test Match TCP DPorts...')
         rule = Rule(protocol='tcp', jump='ACCEPT')
         rule.matches.append(Match('tcp', '--dport 80'))
-        self.assertEqual(rule.specbits(), ['-p', 'tcp', '-m', 'tcp', '--dport', '80', '-j', 'ACCEPT'])
+        print('\tRule: ' + str(rule))
+        print('\t' + str(self.assertEqual(rule.specbits(), ['-p', 'tcp', '-m', 'tcp', '--dport', '80', '-j', 'ACCEPT'])))
+        print('...Done')
 
     def testMatchTcpSport(self):
+        print('Running Test Match TCP SPort...')
         rule = Rule(protocol='tcp', jump='ACCEPT')
         rule.matches.append(Match('tcp', '--sport 1234'))
-        self.assertEqual(rule.specbits(), ['-p', 'tcp', '-m', 'tcp', '--sport', '1234', '-j', 'ACCEPT'])
+        print('\tRule: ' + str(rule))
+        print('\t' + str(self.assertEqual(rule.specbits(), ['-p', 'tcp', '-m', 'tcp', '--sport', '1234', '-j', 'ACCEPT'])))
+        print('...Done')
 
     def testMatchTos(self):
+        print('Running Test Match TOS...')
         rule = Rule(jump='ACCEPT')
         rule.matches.append(Match('tos', '--tos 0x10'))
-        self.assertEqual(rule.specbits(), ['-m', 'tos', '--tos', '0x10', '-j', 'ACCEPT'])
+        print('\tRule: ' + str(rule))
+        print('\t' + str(self.assertEqual(rule.specbits(), ['-m', 'tos', '--tos', '0x10', '-j', 'ACCEPT'])))
+        print('...Done')
 
 class ParseRuleTestCase(unittest.TestCase):
     def testEmpty(self):
+        print('Parse Rule Test Case Set:\nRuning Test Empty...')
         rule = netfilter.parser.parse_rule('')
-        self.assertEqual(rule, Rule())
-        self.assertEqual(rule.specbits(), [])
+        print('\tRule: ' + str(rule))
+        print('\t' + str(self.assertEqual(rule, Rule())))
+        print('\t' + str(self.assertEqual(rule.specbits(), []) ))
+        print('...Done')
     
     def testGoto(self):
+        print('Running Test Goto...')
         rule = netfilter.parser.parse_rule('-g some_rule')
-        self.assertEqual(rule, Rule(goto='some_rule'))
-        self.assertEqual(rule.specbits(), ['-g', 'some_rule'])
+        print('\tRule: ' + str(rule))
+        print('\t' + str(self.assertEqual(rule, Rule(goto='some_rule'))))
+        print('\t' + str(self.assertEqual(rule.specbits(), ['-g', 'some_rule'])))
+        print('...Done')
 
     def testJump(self):
+        print('Running Test Jump...')
         rule = netfilter.parser.parse_rule('-j REJECT')
-        self.assertEqual(rule, Rule(jump='REJECT'))
-        self.assertEqual(rule.specbits(), ['-j', 'REJECT'])
+        print('\tRule: ' + str(rule))
+        print('\t' + str(self.assertEqual(rule, Rule(jump='REJECT'))))
+        print('\t' + str(self.assertEqual(rule.specbits(), ['-j', 'REJECT'])))
+        print('...Done')
 
     def testProtocol(self):
+        print('Running Test Protocol...')
         rule = netfilter.parser.parse_rule('-p tcp')
-        self.assertEqual(rule, Rule(protocol='tcp'))
-        self.assertEqual(rule.specbits(), ['-p', 'tcp'])
+        print('\tRule: ' + str(rule))
+        print('\t' + str(self.assertEqual(rule, Rule(protocol='tcp'))))
+        print('\t' + str(self.assertEqual(rule.specbits(), ['-p', 'tcp'])))
+        print('...Done')
 
     def testMatch(self):
+        print('Running Test Match...')
         rule = netfilter.parser.parse_rule('-m state --state ESTABLISHED,RELATED')
-        self.assertEqual(rule, Rule(
-            matches=[Match('state', '--state ESTABLISHED,RELATED')]))
-        self.assertEqual(rule.specbits(), ['-m', 'state', '--state', 'ESTABLISHED,RELATED'])
+        print('\tRule: ' + str(rule))
+        print('\t' + str(self.assertEqual(rule, Rule(
+            matches=[Match('state', '--state ESTABLISHED,RELATED')]))))
+        print('\t' + str(self.assertEqual(rule.specbits(), ['-m', 'state', '--state', 'ESTABLISHED,RELATED'])))
+        print('...Done')
 
     def testSourceNegated(self):
+        print('Running Test Source Negated...')
         # iptables < 1.4.3
         rule = netfilter.parser.parse_rule('-s ! 10.1.0.0/20 -j LOG --log-prefix "Martians "')
-        self.assertEqual(rule, Rule(source='! 10.1.0.0/20',jump=Target('LOG', '--log-prefix "Martians "')))
+        print('\tRule: ' + str(rule))
+        print('\t' + str(self.assertEqual(rule, Rule(source='! 10.1.0.0/20',jump=Target('LOG', '--log-prefix "Martians "')))))
 
         # iptables >= 1.4.3
         rule = netfilter.parser.parse_rule('! -s 10.1.0.0/20 -j LOG --log-prefix "Martians "')
-        self.assertEqual(rule, Rule(source='! 10.1.0.0/20',jump=Target('LOG', '--log-prefix "Martians "')))
+        print('\tRule: ' + str(rule))
+        print('\t' + str(self.assertEqual(rule, Rule(source='! 10.1.0.0/20',jump=Target('LOG', '--log-prefix "Martians "')))))
+        print('...Done')
 
     def testDestinationNegated(self):
+        print('Running Test Destination Negated...')
         # iptables < 1.4.3
         rule = netfilter.parser.parse_rule('-d ! 10.1.0.0/20 -j LOG --log-prefix "Martians "')
-        self.assertEqual(rule, Rule(destination='! 10.1.0.0/20',jump=Target('LOG', '--log-prefix "Martians "')))
+        print('\tRule: ' + str(rule))
+        print('\t' + str(self.assertEqual(rule, Rule(destination='! 10.1.0.0/20',jump=Target('LOG', '--log-prefix "Martians "')))))
 
         # iptables >= 1.4.3
         rule = netfilter.parser.parse_rule('! -d 10.1.0.0/20 -j LOG --log-prefix "Martians "')
-        self.assertEqual(rule, Rule(destination='! 10.1.0.0/20',jump=Target('LOG', '--log-prefix "Martians "')))
+        print('\tRule: ' + str(rule))
+        print('\t' + str(self.assertEqual(rule, Rule(destination='! 10.1.0.0/20',jump=Target('LOG', '--log-prefix "Martians "')))))
+        print('...Done')
 
     def testInterfacesNegated(self):
+        print('Running Test Interfaces Negated...')
         # iptables < 1.4.3
         rule = netfilter.parser.parse_rule('-i ! eth0 -j LOG --log-prefix "Martians "')
-        self.assertEqual(rule, Rule(in_interface='! eth0',jump=Target('LOG', '--log-prefix "Martians "')))
+        print('\tRule: ' + str(rule))
+        print('\t' + str(self.assertEqual(rule, Rule(in_interface='! eth0',jump=Target('LOG', '--log-prefix "Martians "')))))
 
         rule = netfilter.parser.parse_rule('-o ! eth0 -j LOG --log-prefix "Martians "')
-        self.assertEqual(rule, Rule(out_interface='! eth0',jump=Target('LOG', '--log-prefix "Martians "')))
+        print('\tRule: ' + str(rule))
+        print('\t' + str(self.assertEqual(rule, Rule(out_interface='! eth0',jump=Target('LOG', '--log-prefix "Martians "')))))
 
         # iptables >= 1.4.3
         rule = netfilter.parser.parse_rule('! -i eth0 -j LOG --log-prefix "Martians "')
-        self.assertEqual(rule, Rule(in_interface='! eth0',jump=Target('LOG', '--log-prefix "Martians "')))
+        print('\tRule: ' + str(rule))
+        print('\t' + str(self.assertEqual(rule, Rule(in_interface='! eth0',jump=Target('LOG', '--log-prefix "Martians "')))))
 
         rule = netfilter.parser.parse_rule('! -o eth0 -j LOG --log-prefix "Martians "')
-        self.assertEqual(rule, Rule(out_interface='! eth0',jump=Target('LOG', '--log-prefix "Martians "')))
+        print('\tRule: ' + str(rule))
+        print('\t' + str(self.assertEqual(rule, Rule(out_interface='! eth0',jump=Target('LOG', '--log-prefix "Martians "')))))
+        print('...Done')
 
     def testProtocolNegated(self):
+        print('Running Test Protocol Negated...')
         # iptables < 1.4.3
         rule = netfilter.parser.parse_rule('-p ! tcp -j LOG --log-prefix "Martians "')
-        self.assertEqual(rule, Rule(protocol='! tcp',jump=Target('LOG', '--log-prefix "Martians "')))
+        print('\tRule: ' + str(rule))
+        print('\t' + str(self.assertEqual(rule, Rule(protocol='! tcp',jump=Target('LOG', '--log-prefix "Martians "')))))
+        print('...Done')
 
         # iptables >= 1.4.3
         rule = netfilter.parser.parse_rule('! -p tcp -j LOG --log-prefix "Martians "')
-        self.assertEqual(rule, Rule(protocol='! tcp',jump=Target('LOG', '--log-prefix "Martians "')))
+        print('\tRule: ' + str(rule))
+        print('\t' + str(self.assertEqual(rule, Rule(protocol='! tcp',jump=Target('LOG', '--log-prefix "Martians "')))))
+        print('...Done')
 
 class BufferedTestCase(unittest.TestCase):
     def testJump(self):
+        print('Buffered Test Case Set:\nRunning Test Jump...')
         table = netfilter.table.Table('test_table', False)
         table.append_rule('test_chain', Rule(jump='ACCEPT'))
+        print('\tTable: ' + str(table))
         buffer = table.get_buffer()
-        self.assertEqual(buffer, [['iptables', '-t', 'test_table', '-A', 'test_chain', '-j', 'ACCEPT']])
+        print('\tBuffer: ' + str(buffer))
+        print('\t' + str(self.assertEqual(buffer, [['iptables', '-t', 'test_table', '-A', 'test_chain', '-j', 'ACCEPT']])))
+        print('...Done')
 
 if __name__ == '__main__':
     unittest.main()
