@@ -1,6 +1,7 @@
 import os
 import subprocess
 import sys
+import iptc
 
 from netfilter.rule import Rule, Match, Target
 import netfilter.table

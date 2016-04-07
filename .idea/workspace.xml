@@ -2,10 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="2ca0deba-830f-4b26-8a83-52f4a1a5a330" name="Default" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gitignore" afterPath="$PROJECT_DIR$/.gitignore" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/netfilter/firewall.py" afterPath="$PROJECT_DIR$/netfilter/firewall.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/netfilter/rule.py" afterPath="$PROJECT_DIR$/netfilter/rule.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tests/test_netfilter.py" afterPath="$PROJECT_DIR$/tests/test_netfilter.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tests/test_netfilter_root.off" afterPath="$PROJECT_DIR$/tests/test_netfilter_root.off" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/netfilter/gui.py" afterPath="$PROJECT_DIR$/netfilter/gui.py" />
     </list>
     <ignored path="cisc_230_project.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -30,10 +30,22 @@
       <file leaf-file-name="firewall.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/netfilter/firewall.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="120">
-              <caret line="8" column="60" selection-start-line="8" selection-start-column="60" selection-end-line="8" selection-end-column="60" />
+            <state relative-caret-position="500">
+              <caret line="260" column="13" selection-start-line="260" selection-start-column="13" selection-end-line="267" selection-end-column="27" />
               <folding>
                 <element signature="e#0#9#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="gui.py" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/netfilter/gui.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="210">
+              <caret line="82" column="16" selection-start-line="82" selection-start-column="16" selection-end-line="82" selection-end-column="16" />
+              <folding>
+                <element signature="e#0#29#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -42,14 +54,14 @@
       <file leaf-file-name="parser.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/netfilter/parser.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="0" column="9" selection-start-line="0" selection-start-column="7" selection-end-line="0" selection-end-column="9" />
+            <state relative-caret-position="244">
+              <caret line="138" column="25" selection-start-line="138" selection-start-column="17" selection-end-line="138" selection-end-column="25" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="test_netfilter_root.off" pinned="false" current-in-tab="true">
+      <file leaf-file-name="test_netfilter_root.off" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/tests/test_netfilter_root.off">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="45">
@@ -62,8 +74,8 @@
       <file leaf-file-name="test_netfilter.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/tests/test_netfilter.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="193">
-              <caret line="71" column="24" selection-start-line="71" selection-start-column="24" selection-end-line="71" selection-end-column="24" />
+            <state relative-caret-position="240">
+              <caret line="283" column="38" selection-start-line="283" selection-start-column="25" selection-end-line="283" selection-end-column="38" />
               <folding>
                 <element signature="e#0#15#0" expanded="true" />
               </folding>
@@ -74,8 +86,8 @@
       <file leaf-file-name="rule.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/netfilter/rule.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="245">
-              <caret line="76" column="24" selection-start-line="76" selection-start-column="23" selection-end-line="76" selection-end-column="24" />
+            <state relative-caret-position="-1702">
+              <caret line="190" column="21" selection-start-line="190" selection-start-column="13" selection-end-line="190" selection-end-column="21" />
               <folding>
                 <element signature="e#0#14#0" expanded="true" />
               </folding>
@@ -86,8 +98,8 @@
       <file leaf-file-name="table.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/netfilter/table.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="245">
-              <caret line="20" column="11" selection-start-line="20" selection-start-column="9" selection-end-line="20" selection-end-column="11" />
+            <state relative-caret-position="-325">
+              <caret line="22" column="20" selection-start-line="22" selection-start-column="19" selection-end-line="22" selection-end-column="20" />
               <folding>
                 <element signature="e#0#9#0" expanded="true" />
               </folding>
@@ -105,6 +117,7 @@
       <list>
         <option value="$PROJECT_DIR$/tests/test_netfilter.py" />
         <option value="$PROJECT_DIR$/netfilter/firewall.py" />
+        <option value="$PROJECT_DIR$/netfilter/gui.py" />
       </list>
     </option>
   </component>
@@ -420,7 +433,7 @@
     <frame x="0" y="23" width="1440" height="800" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2532189" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2553648" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="true" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
@@ -448,38 +461,20 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/netfilter/parser.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="9" selection-start-line="0" selection-start-column="7" selection-end-line="0" selection-end-column="9" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/netfilter/table.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="245">
-          <caret line="20" column="11" selection-start-line="20" selection-start-column="9" selection-end-line="20" selection-end-column="11" />
-          <folding>
-            <element signature="e#0#9#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/netfilter/rule.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="245">
-          <caret line="76" column="24" selection-start-line="76" selection-start-column="23" selection-end-line="76" selection-end-column="24" />
+        <state relative-caret-position="-1702">
+          <caret line="190" column="21" selection-start-line="190" selection-start-column="13" selection-end-line="190" selection-end-column="21" />
           <folding>
             <element signature="e#0#14#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/netfilter/firewall.py">
+    <entry file="file://$PROJECT_DIR$/netfilter/table.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="120">
-          <caret line="8" column="60" selection-start-line="8" selection-start-column="60" selection-end-line="8" selection-end-column="60" />
+        <state relative-caret-position="-325">
+          <caret line="22" column="20" selection-start-line="22" selection-start-column="19" selection-end-line="22" selection-end-column="20" />
           <folding>
             <element signature="e#0#9#0" expanded="true" />
           </folding>
@@ -488,8 +483,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/tests/test_netfilter.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="193">
-          <caret line="71" column="24" selection-start-line="71" selection-start-column="24" selection-end-line="71" selection-end-column="24" />
+        <state relative-caret-position="240">
+          <caret line="283" column="38" selection-start-line="283" selection-start-column="25" selection-end-line="283" selection-end-column="38" />
           <folding>
             <element signature="e#0#15#0" expanded="true" />
           </folding>
@@ -501,6 +496,34 @@
         <state relative-caret-position="45">
           <caret line="3" column="21" selection-start-line="3" selection-start-column="21" selection-end-line="3" selection-end-column="21" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/netfilter/parser.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="244">
+          <caret line="138" column="25" selection-start-line="138" selection-start-column="17" selection-end-line="138" selection-end-column="25" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/netfilter/firewall.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="500">
+          <caret line="260" column="13" selection-start-line="260" selection-start-column="13" selection-end-line="267" selection-end-column="27" />
+          <folding>
+            <element signature="e#0#9#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/netfilter/gui.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="210">
+          <caret line="82" column="16" selection-start-line="82" selection-start-column="16" selection-end-line="82" selection-end-column="16" />
+          <folding>
+            <element signature="e#0#29#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
