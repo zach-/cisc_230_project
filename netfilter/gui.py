@@ -84,7 +84,7 @@ def main():
             elif user_input.lower() == "block":
                 print os.system("iptables -A OUTPUT -p tcp --dport 25 -j DROP")
                 print "Port 25 Blocked for OUTGOING connections"
-                print os.system("iptables save")
+                print os.system("service iptables save")
 
             elif user_input.lower() == "nat":
                 interface = raw_input("Interface: ")
