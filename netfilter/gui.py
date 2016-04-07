@@ -31,9 +31,9 @@ def main():
         firewall.start()
         print("Firewall shell is now running.....")
         while cont:
-            print("\Do you wish to....")
+            print("Do you wish to....")
             print(
-            "display tables[dispaly]\naccept forward[forward]\naccept icmp[icmp]\naccept input[input]\naccept protocol[protocol]\nredirect http[http]\nsource nat[nat]\nclose shell[close]\nrestart shell[restart]\ncommit[commit]\nclear[clear]")
+            "display tables[dispaly]\nblock port 25[block]\naccept forward[forward]\naccept icmp[icmp]\naccept input[input]\naccept protocol[protocol]\nredirect http[http]\nsource nat[nat]\nclose shell[close]\nrestart shell[restart]\ncommit[commit]\nclear[clear]")
             user_input = raw_input("Command: ")
             if user_input.lower() == "forward":
                 question = raw_input("Do you wish to add an in and out interface? [Y/N]\n")
@@ -80,7 +80,12 @@ def main():
 
             elif user_input.lower() == "display":
                 print os.system("iptables -L -n")
-                
+
+            elif user_input.lower() == "block":
+                print os.system("iptables -A OUTPUT -p tcp --dport 25 -j DROP")
+                print "Port 25 Blocked for OUTGOING connections"
+                print os.system("iptables save")
+
             elif user_input.lower() == "nat":
                 interface = raw_input("Interface: ")
                 firewall.source_nat(interface)
