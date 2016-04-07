@@ -4,7 +4,7 @@ import re
 import netfilter.parser
 
 """
-            rule.py                                             Author: Zack Bricker
+            rule.py                                             Author: Zach Bricker
 
 
             A set of classes to allow the creation of rules to be used with IPTables

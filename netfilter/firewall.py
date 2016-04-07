@@ -6,7 +6,7 @@ from netfilter.rule import Rule, Match, Target
 import netfilter.table
 
 """
-        firewall.py                                 Author: Zack Bricker
+        firewall.py                                 Author: Zach Bricker
 
 
         A program to allow the interaction IPTables without having to use the terminal.  Only works with Linux.
